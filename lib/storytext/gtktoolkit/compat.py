@@ -14,7 +14,7 @@ if useGtk3:
     pygtkcompat.enable()
     pygtkcompat.enable_gtk(version='3.0')
     import gi
-    from gi.repository import Gdk, Gtk, GdkPixbuf
+    from gi.repository import Gdk, Gtk, GdkPixbuf, GObject
     Gtk.image_new_from_animation = Gtk.Image.new_from_animation
     Gdk.PixbufAnimation = GdkPixbuf.PixbufAnimation
     Gtk.TreeViewColumn.get_cell_renderers = Gtk.TreeViewColumn.get_cells
@@ -98,3 +98,9 @@ def setDialogSeparator(dialog, value):
     if not useGtk3:
         # It has been deprecated in gtk 2.22 and should not be used. There is not gtk3 equivalent
         dialog.set_has_separator(value)
+
+def child_get_property(table, child, property_name):
+    if useGtk3:
+        table.child_get_property(child, property_name, value=GObject.Value())
+    else:
+        table.child_get_property(child, property_name)

@@ -272,8 +272,8 @@ class Describer:
     def getTableLayoutMap(self, table):
         layoutMap = {}
         for child in table.get_children():
-            childRow = table.child_get_property(child, "top-attach")
-            childColumn = table.child_get_property(child, "left-attach")
+            childRow = storytext.gtktoolkit.compat.child_get_property(table, child, "top-attach")
+            childColumn = storytext.gtktoolkit.compat.child_get_property(table, child, "left-attach")
             layoutMap.setdefault(childRow, {}).setdefault(childColumn, []).append(child)
         return layoutMap
     

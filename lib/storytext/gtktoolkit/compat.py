@@ -1,5 +1,5 @@
 # Just use gtk2 for now
-tryGtk3 = False
+tryGtk3 = True
 
 if tryGtk3:
     try:

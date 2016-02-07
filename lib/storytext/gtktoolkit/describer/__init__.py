@@ -219,7 +219,10 @@ class Describer:
         if self.prefix != "Showing ":
             text += self.prefix
         text += self.getToggleButtonType(button)
-        text += " button '" + button.get_label() + "'" + self.getActivePostfix(button)
+        label = button.get_label()
+        if label is None:
+            label = "Unknown"
+        text += " button '" + label + "'" + self.getActivePostfix(button)
         return text
 
     def isCheckWidget(self, widget):

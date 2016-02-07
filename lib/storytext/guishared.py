@@ -300,7 +300,7 @@ class ScriptEngine(scriptengine.ScriptEngine):
         import atexit
         if hasattr(atexit, "_exithandlers"): # not worth dying for...
             for func, args, kw in atexit._exithandlers:
-                if func.__module__.startswith("coverage."):
+                if func.__module__ and func.__module__.startswith("coverage."):
                     func(*args, **kw)
 
     def replaceAutoRecordingForShortcut(self, script):

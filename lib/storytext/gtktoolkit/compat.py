@@ -1,5 +1,4 @@
-# Just use gtk2 for now
-tryGtk3 = True
+from storytext.cmdline import tryGtk3
 
 if tryGtk3:
     try:

@@ -26,7 +26,7 @@ For fuller documentation refer to the online docs at http://www.texttest.org"""
     
     default_interface = "gtk" if sys.version_info[0] == 2 else "tkinter"
     parser.add_option("-i", "--interface", metavar="INTERFACE",
-                      help="type of interface used by application, should be 'console', 'gtk', 'tkinter', 'wx', 'javaswing', 'javaswt', 'javarcp' or 'javagef' ('" + default_interface + "' is default)", 
+                      help="type of interface used by application, should be 'console', 'gtk', gtk3, 'tkinter', 'wx', 'javaswing', 'javaswt', 'javarcp' or 'javagef' ('" + default_interface + "' is default)", 
                       default=default_interface)
     parser.add_option("-f", "--pollfile", metavar="FILENAME",
                       help="file to poll for updates, generating an application event when it appears or disappears")
@@ -73,6 +73,7 @@ On Windows, '-X MenuNOTFile' is a temporary alternative to this, working around 
     parser.add_option("--insert-shortcuts", action="store_true", help="Re-record the replay script to the record script without running anything, inserting shortcuts as required")
     return parser
 
+tryGtk3 = False
 
 def create_script_engine(options, install_root):
     logLevel = options.loglevel.upper()
@@ -84,6 +85,10 @@ def create_script_engine(options, install_root):
 
     if options.interface == "console":
         return scriptengine.ScriptEngine(timeout=options.timeout)
+    elif options.interface == "gtk3":
+        global tryGtk3
+        tryGtk3 = True
+        options.interface = "gtk"
 
     cmd = "from storytext." + options.interface + "toolkit import ScriptEngine"
     # This is a bit weird, but it's apparently necessary in python 3...

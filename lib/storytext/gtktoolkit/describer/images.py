@@ -97,8 +97,12 @@ class ImageDescriber:
             return ""
         
     def getPixbufName(self, pixbuf):
-        fromData = pixbuf.get_data("name")
-        if fromData:
+        try:
+            fromData = pixbuf.get_data("name")
+        except:
+            # no get_data() in newer PyGobject versions
+            fromData = None
+        if fromData
             return fromData
         else:
             return self.pixbufs.get(pixbuf, "Unknown")

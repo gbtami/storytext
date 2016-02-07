@@ -102,7 +102,7 @@ class ImageDescriber:
         except:
             # no get_data() in newer PyGobject versions
             fromData = None
-        if fromData
+        if fromData:
             return fromData
         else:
             return self.pixbufs.get(pixbuf, "Unknown")

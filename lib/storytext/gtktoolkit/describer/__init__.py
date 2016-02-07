@@ -6,6 +6,7 @@ to aid in text-based UI testing for GTK
 import storytext.gtktoolkit.compat
 import logging, gtk, gobject, locale, operator
 
+from storytext import log
 from treeviews import performTreeViewInterceptions, TreeViewDescriber, treeModelSignals
 from images import performImageInterceptions, ImageDescriber
 
@@ -71,6 +72,7 @@ def setMonitoring(loggingEnabled=False):
 def describeNewWindow(*args):
     return idleScheduler.describeNewWindow(*args)
 
+
 class Describer:
     logger = None
     supportedWidgets = [ gtk.Label, gtk.ToggleToolButton, gtk.ToolButton, gtk.SeparatorToolItem,
@@ -82,7 +84,7 @@ class Describer:
     @classmethod
     def createLogger(cls):
         if not cls.logger:
-            cls.logger = logging.getLogger("gui log")
+            cls.logger = log.getLogger("gui log")
 
     @classmethod
     def isEnabled(cls):

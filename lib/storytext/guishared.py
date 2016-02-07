@@ -2,7 +2,7 @@
 """ Generic module for any kind of Python UI, as distinct from the classes these derive from which contains 
 stuff also applicable even without this """
 
-import scriptengine, replayer, definitions, encodingutils
+import scriptengine, replayer, definitions, encodingutils, log
 import os, sys, logging, subprocess, time, re
 from gridformatter import GridFormatter, GridFormatterWithHeader
 from itertools import izip
@@ -651,7 +651,7 @@ class UIMap:
         self.fileHandler = UIMapFileHandler(uiMapFiles)
         self.scriptEngine = scriptEngine
         self.windows = []
-        self.logger = logging.getLogger("gui map")
+        self.logger = log.getLogger("gui map")
         self.logger.debug("Reading ui map files at " + repr(uiMapFiles))
 
     def readFiles(self, uiMapFiles):
@@ -1115,7 +1115,7 @@ class Describer(object):
         self.widgetsWithState = OrderedDict()
         if Describer.imageCounter is None:
             Describer.imageCounter = WidgetCounter(self.imagesEqual)
-        self.structureLog = logging.getLogger("widget structure")
+        self.structureLog = log.getLogger("widget structure")
 
     def imagesEqual(self, image1, image2):
         return image1 == image2
@@ -1597,7 +1597,7 @@ class Indexer:
     allIndexers = {}
     def __init__(self, widget):
         self.widget = widget
-        self.logger = logging.getLogger("Indexer")
+        self.logger = log.getLogger("Indexer")
         
     @classmethod
     def getIndexer(cls, widget):

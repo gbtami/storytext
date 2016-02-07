@@ -3,7 +3,7 @@
 
 import os, sys, signal, logging
 from copy import copy
-import replayer, encodingutils
+import replayer, encodingutils, log
 from definitions import *
 from threading import Lock
 
@@ -163,7 +163,7 @@ class ShortcutTracker:
         self.commandsForMatch = []
         self.commandsForMismatch = []
         self.visitedShortcuts = []
-        self.logger = logging.getLogger("Shortcut Tracker")
+        self.logger = log.getLogger("Shortcut Tracker")
         self.shortcutManager = shortcutManager
         self.reset()
 
@@ -313,7 +313,7 @@ class ShortcutTracker:
 
 class UseCaseRecorder:
     def __init__(self, shortcuts):
-        self.logger = logging.getLogger("storytext record")
+        self.logger = log.getLogger("storytext record")
         # Store events we don't record at the top level, usually controls on recording...
         self.eventsBlockedTopLevel = []
         self.scripts = []

@@ -1,6 +1,8 @@
 
 import sys, codecs, logging, locale
 
+import log
+
 localeEncoding = None
 
 def openEncoded(file, mode="r"):
@@ -46,4 +48,4 @@ class EncodingLoggerProxy:
 
     
 def getEncodedLogger(*args):
-    return EncodingLoggerProxy(logging.getLogger(*args))
+    return EncodingLoggerProxy(log.getLogger(*args))

@@ -98,6 +98,23 @@ class CellRendererDescriber:
         return str(desc)
 
 
+class CellRendererCustomDescriber(CellRendererDescriber):
+    def getBasicDescription(self, *args):
+        return "CellRendererCustom"
+
+class CellRendererComboDescriber(CellRendererDescriber):
+    def getBasicDescription(self, *args):
+        return "CellRendererCombo"
+
+class CellRendererProgressDescriber(CellRendererDescriber):
+    def getBasicDescription(self, *args):
+        return "CellRendererProgress"
+
+class CellRendererSpinDescriber(CellRendererDescriber):
+    def getBasicDescription(self, *args):
+        return "CellRendererSpin"
+
+
 class CellRendererTextDescriber(CellRendererDescriber):    
     def getBasicDescription(self, *args):
         markupDesc = self.getValue("markup", *args)
@@ -203,8 +220,12 @@ class TreeViewDescriber:
             for renderer in column.get_cell_renderers():
                 extractors = getAllExtractors(column, renderer)
                 if extractors:
-                    className = renderer.__class__.__name__ + "Describer"
-                    describers.append(eval(className + "(extractors)"))
+                    try:
+                        className = renderer.__class__.__name__ + "Describer"
+                        describers.append(eval(className + "(extractors)"))
+                    except NameError:
+                        className = "CellRendererCustomDescriber"
+                        describers.append(eval(className + "(extractors)"))
                 else:
                     self.describersOK = False
         return describers

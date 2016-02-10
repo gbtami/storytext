@@ -100,6 +100,8 @@ def setDialogSeparator(dialog, value):
 
 def child_get_property(table, child, property_name):
     if useGtk3:
-        table.child_get_property(child, property_name, value=GObject.Value())
+        # Some pygobject versions need additional value param
+        value = value = GObject.Value(int)
+        table.child_get_property(child, property_name, value)
     else:
         table.child_get_property(child, property_name)

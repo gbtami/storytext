@@ -143,7 +143,14 @@ class TextViewEvent(StateChangeEvent):
 class ComboBoxEvent(StateChangeEvent):
     def getStateDescription(self, *args):
         # Hardcode 0, seems to work for the most part...
-        return removeMarkup(self.widget.get_model().get_value(self.widget.get_active_iter(), 0))
+        # but when not we will try 1
+        model = self.widget.get_model()
+        column = 0 if model.get_column_type(0) is str else 1
+        iter = self.widget.get_active_iter()
+        if iter is not None:
+            return removeMarkup(model.get_value(iter, column))
+        else:
+            return ""
 
     def getChangeMethod(self):
         return self.widget.set_active_iter
@@ -155,7 +162,10 @@ class ComboBoxEvent(StateChangeEvent):
         self.widget.get_model().foreach(self.setMatchingIter, argumentString)
 
     def setMatchingIter(self, model, path, iter, argumentString):
-        if removeMarkup(model.get_value(iter, 0)) == argumentString:
+        # Hardcode 0, seems to work for the most part...
+        # but when not we will try 1
+        column = 0 if model.get_column_type(0) is str else 1
+        if removeMarkup(model.get_value(iter, column)) == argumentString:
             self.changeMethod(iter)
             return True
 

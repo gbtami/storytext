@@ -221,7 +221,8 @@ class Describer:
         text += self.getToggleButtonType(button)
         label = button.get_label()
         if label is None:
-            label = "Unknown"
+            # Gtk.AboutDialog buttons
+            label = button.get_children()[0].get_text()
         text += " button '" + label + "'" + self.getActivePostfix(button)
         return text
 
@@ -439,6 +440,8 @@ class Describer:
     def getCurrentNotebookPageDescription(self, notebook):
         index = notebook.get_current_page()
         page = notebook.get_nth_page(index)
+        if page is None:
+            return "Viewing page None"
         tabName = notebook.get_tab_label_text(page)
         return "Viewing page '" + tabName + "'\n" + self.getDescription(page)
     
